@@ -12,7 +12,7 @@
 		"lookup": "properties.NAME_LONG",
 		"from": {
 		  "data": {
-			"url": "https://raw.githubusercontent.com/hngu0062/hw10/main/data/hw9.csv"
+			"url": "data/hw9.csv"
 		  },
 		  "key": "Country",
 		  "fields": ["Per_Total_English_speakers"]
