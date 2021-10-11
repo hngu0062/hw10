@@ -1,0 +1,70 @@
+{
+	"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	"title": "Top 20 Languages Spoken By Australians At Home Other Than English",
+	"width": 900,
+	"height": 300,
+	"data": {
+	  "url": "data/ausLOTE.csv", 
+	  "format": {"parse": {
+		"2001": "number",
+		"2006": "number",
+		"2011": "number",
+		"2016": "number"
+	  }}
+	  },
+	"params": [
+	  {
+		"name": "year_select",
+		"value": 2016,
+		"bind": {
+		  "input": "select",
+		  "options": [2001,2006,2011,2016],
+		  "name": "Select year: "
+		}
+	  },
+	  {
+		"name": "area_select",
+		"value": "Australia",
+		"bind": {
+		  "input": "select",
+		  "options": [
+			"Australia",
+			"New South Wales",
+			"Victoria",
+			"Queensland",
+			"South Australia",
+			"Western Australia",
+			"Tasmania",
+			"Northern Territory",
+			"Australian Capital Territory",
+			"Greater Capital Cities",
+			"Regional Australia"
+		  ],
+		  "name": "Select area: "
+		}
+	  }
+	],
+	"transform": [
+	  {"filter": "datum.WebID < 50"},
+	  {"fold": ["2001","2006","2011","2016"]},
+	  {"filter": "datum.key == year_select"},
+	  {"filter": "datum.Area == area_select"},
+	  {"window": [{"op": "rank", "as": "ranking"}], 
+	  "sort": [{"field": "value", "order":"descending"}]},
+	  {"filter": "datum.ranking <= 20"}
+	],
+	"mark": "bar",
+	"encoding": {
+	  "x": {
+		"field": "Data label",
+		"type": "nominal",
+		"title": "Language",
+		"sort": {"encoding": "y", "order": "descending"}
+	  },
+	  "y": {
+		"field": "value", 
+		"type": "quantitative", 
+		"title": "Speakers"
+	  }
+	}
+  }
